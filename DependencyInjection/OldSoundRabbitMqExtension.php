@@ -84,6 +84,15 @@ class OldSoundRabbitMqExtension extends Extension
                 $this->injectLoggedChannel($definition, $key, $consumer['connection']);
             }
             $definition->addMethodCall('setExchangeOptions', array($consumer['exchange_options']));
+
+            if (isset($consumer['queue_options']['arguments'])) {
+                $args = array();
+                foreach ($consumer['queue_options']['arguments'] as $k => $v) {
+                    $args[str_replace('_', '-', $k)] = $v;
+                }
+                $consumer['queue_options']['arguments'] = $args;
+            }
+
             $definition->addMethodCall('setQueueOptions', array($consumer['queue_options']));
             $definition->addMethodCall('setCallback', array(array(new Reference($consumer['callback']), 'execute')));
 

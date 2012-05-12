@@ -27,7 +27,7 @@ abstract class BaseAmqp
         'exclusive' => false,
         'auto_delete' => false,
         'nowait' => false,
-        'arguments' => null,
+        'arguments' => array(),
         'ticket' => null
     );
 
